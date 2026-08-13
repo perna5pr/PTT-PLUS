@@ -88,4 +88,4 @@ Agradecimento especial aos desenvolvedores que projetaram e integraram este sist
 
 [![CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![GNU GPLv3](https://www.gnu.org/graphics/gplv3-or-later.png)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![CERN-OHL-S](URL_DA_IMAGEM_OFICIAL)](https://ohwr.org/cern_ohl_s_v2.txt)
+[![CERN-OHL-S](https://img.shields.io/badge/Hardware-CERN--OHL--S-blue)](https://cern-ohl.web.cern.ch/)
