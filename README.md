@@ -9,21 +9,20 @@ Controle de comunicação sem fio de alta precisão baseado em Bluetooth Low Ene
 
 ### Conteúdo
 Este projeto utiliza a licença Creative Commons BY-NC-SA 4.0.
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 ### Software
 O código-fonte deste projeto está licenciado sob GPLv3.
+[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Hardware
 O projeto de hardware está licenciado sob CERN-OHL-S.
+[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-grey.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
 
 ### Filosofia do projeto
 Open Source Hardware can Learn from Software - OSS & OSHW
-
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-grey.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
-[![Open Source Hardware](https://img.shields.io/badge/Open%20Source%20Hardware-OSHWA-blue.svg)](https://www.oshwa.org/definition/)
 [![Open Source Software](https://img.shields.io/badge/Open%20Source%20Software-OSS-green.svg)](https://opensource.org/)
+[![Open Source Hardware](https://img.shields.io/badge/Open%20Source%20Hardware-OSHWA-blue.svg)](https://www.oshwa.org/definition/)
 
 ---
 
