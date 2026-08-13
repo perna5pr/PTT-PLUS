@@ -1,8 +1,10 @@
-Canal Técnico Automação SC
-https://youtube.com/@tecnicoautomacao5553
+# Links Uteis:
 
-vídeo do CBtalk 
-https://youtube.com/@tecnicoautomacao5553?si=wKwi7aj_R_T0tsEo
+## Canal Técnico Automação SC
+[https://youtube.com/@tecnicoautomacao5553](https://youtube.com/@tecnicoautomacao5553)
 
+### Vídeo do CBtalk
+[https://www.youtube.com/@tecnicoautomacao5553/videos](https://www.youtube.com/@tecnicoautomacao5553/videos)
 
-https://youtube.com/@tecnicoautomacao5553?si=M1lDt1zUHuyvBsG-
+### Pedal-Mouse-PTT
+[https://www.youtube.com/watch?v=D_ChzgdsvcE](https://www.youtube.com/watch?v=D_ChzgdsvcE)
