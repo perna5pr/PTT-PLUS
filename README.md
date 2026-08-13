@@ -1,8 +1,8 @@
 # 🤖 Sistema de Automação PTT Plus (4bt + OLED) para ESP32-C3
 
-[![License: CC BY-NC-SA 4.0](https://shields.io)](http://creativecommons.org)
-[![Hardware License](https://shields.io)](https://ohwr.org)
-[![Software License](https://shields.io)](https://gnu.org)
+[![License: CC BY-NC-SA 4.0](https://creativecommons.org)](http://creativecommons.org)
+[![Software License: GPLv3](https://gnu.org)](https://gnu.org)
+[![Hardware License: CERN-OHL-S](https://ohwr.org)](https://ohwr.org)
 
 
 Controle de comunicação sem fio de alta precisão baseado em Bluetooth Low Energy (BLE) projetado para automatizar comandos de clique e posicionamento de tela (emulação de mouse HID) no aplicativo CBTalk. O sistema possui temporização inteligente de segurança, interface visual em display compacto de 0.42" e calibração de coordenadas interativa gravada na memória Flash do circuito.
