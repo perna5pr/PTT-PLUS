@@ -1,0 +1,24 @@
+TERMOS GERAIS DE USO E LICENÇA - AUTOMAÇÃO ESP32 
+
+Direitos Autorais (c) 2026 PTT PLUS, ~ CASSA VAGABUNDO, *PERNA-5-PR*, !# *TECNICO* / SC 
+
+Todo o conteúdo deste repositório (incluindo códigos-fonte, firmware, 
+esquemas eletrônicos e documentação) está protegido e rege-se pelas 
+seguintes condições unificadas baseadas na licença internacional 
+Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0 (CC BY-NC-SA 4.0):
+
+1. ATRIBUIÇÃO (BY): Você deve dar o crédito apropriado ao/s autor/es original/is.
+2. NÃO COMERCIAL (NC): É proibido o uso, fabricação ou comercialização deste 
+   projeto e de suas partes para fins comerciais sem autorização prévia por escrito.
+3. COMPARTILHA IGUAL (SA): Qualquer trabalho derivado, modificação no código 
+   ou alteração no circuito eletrônico DEVE ser publicado obrigatoriamente 
+   sob estas mesmas condições de abertura e restrição comercial.
+
+Aplicações Técnicas Específicas:
+- Os códigos-fonte (.ino, .cpp, .h) complementam-se sob os termos da licença GNU GPLv3 para garantir a integridade do software.
+- Os esquemas e layouts de placa de circuito complementam-se sob os termos da licença CERN-OHL-S v2 para documentação de hardware.
+
+O descumprimento de qualquer uma das cláusulas acima revoga automaticamente as permissões de uso concedidas.
+
+
+
