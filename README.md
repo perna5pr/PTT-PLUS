@@ -1,4 +1,4 @@
-# 🤖 Sistema de Automação PTT Plus (4bt + OLED) para ESP32-C3
+# 🤖 Sistema de Automação PTT Plus (2bt e 4bt) para ESP32-C3 super mini
 
 
 
