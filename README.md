@@ -86,8 +86,6 @@ Agradecimento especial aos desenvolvedores que projetaram e integraram este sist
 *   ⚡ `!# _TECNICO_ / SC`
 
 
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
-[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-
-[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-red.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
+[![CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![GNU GPLv3](https://www.gnu.org/graphics/gplv3-or-later.png)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![CERN-OHL-S](URL_DA_IMAGEM_OFICIAL)](https://ohwr.org/cern_ohl_s_v2.txt)
