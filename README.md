@@ -1,6 +1,9 @@
-# 🤖 Sistema de Automação PTT Plus (2bt e 4bt) para ESP32-C3 super mini
+# 🤖 PTT-PLUS (2bt e 4bt) 
+## Sistema de Automação com ESP32-C3 super mini para o APP CBTalk
 
+Controle de comunicação sem fio de alta precisão baseado em Bluetooth Low Energy (BLE) projetado para automatizar comandos de clique e posicionamento de tela (emulação de mouse HID) no aplicativo CBTalk. O sistema possui temporização inteligente de segurança, interface visual em display compacto de 0.42" e calibração de coordenadas interativa gravada na memória Flash do circuito.
 
+---
 
 ## Licenças
 
@@ -13,13 +16,14 @@ O código-fonte deste projeto está licenciado sob GPLv3.
 ### Hardware
 O projeto de hardware está licenciado sob CERN-OHL-S.
 
+### Filosofia do projeto
+Open Source Hardware can Learn from Software - OSS & OSHW
+
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-red.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
-
-
-
-Controle de comunicação sem fio de alta precisão baseado em Bluetooth Low Energy (BLE) projetado para automatizar comandos de clique e posicionamento de tela (emulação de mouse HID) no aplicativo CBTalk. O sistema possui temporização inteligente de segurança, interface visual em display compacto de 0.42" e calibração de coordenadas interativa gravada na memória Flash do circuito.
+[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-grey.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
+[![Open Source Hardware](https://img.shields.io/badge/Open%20Source%20Hardware-OSHWA-blue.svg)](https://www.oshwa.org/definition/)
+[![Open Source Software](https://img.shields.io/badge/Open%20Source%20Software-OSS-green.svg)](https://opensource.org/)
 
 ---
 
@@ -77,16 +81,102 @@ Este projeto é de código e hardware abertos, protegido sob o conceito híbrido
 *   🛑 **Não Comercial:** É proibida a comercialização de placas montadas baseadas nesses circuitos ou a venda do firmware embarcado sem licenciamento dedicado das partes.
 *   🔄 **CompartilhaIgual:** Qualquer projeto derivado ou modificação gerada a partir deste repositório deve obrigatoriamente manter a mesma licença aberta e não-comercial.
 
+Este projeto utiliza licenças diferentes para cada tipo de material. A licença aplicável depende do conteúdo que está sendo utilizado.
+
+### 📄 Conteúdo e documentação
+
+A documentação, textos, imagens, diagramas e demais materiais criativos deste projeto são disponibilizados sob a:
+
+<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+  <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons BY-NC-SA 4.0" />
+</a>
+
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**
+
+Você pode compartilhar e adaptar este material, desde que:
+
+* dê os devidos créditos ao autor;
+* não utilize o material para fins comerciais;
+* distribua adaptações sob a mesma licença;
+* mantenha os avisos de atribuição e licença aplicáveis.
+
+[Leia o texto completo da CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+---
+
+### 💻 Software
+
+O código-fonte deste projeto é disponibilizado sob a:
+
+<a href="https://www.gnu.org/licenses/gpl-3.0.html">
+  <img src="https://www.gnu.org/graphics/gplv3-or-later.png" alt="GNU GPLv3" />
+</a>
+
+**GNU General Public License v3.0 (GPLv3)**
+
+O software pode ser usado, estudado, modificado e redistribuído de acordo com os termos da GPLv3.
+
+[Leia o texto completo da GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html).
+
+---
+
+### 🔧 Hardware
+
+O hardware, incluindo esquemas, arquivos de projeto, layouts, modelos e demais arquivos necessários para sua fabricação e modificação, é disponibilizado sob a:
+
+
+<a href="https://ohwr.org/cern_ohl_s_v2.txt">
+  <img src="https://cern-ohl.web.cern.ch/wp-content/themes/cern/public/images/logo-white.svg" alt="CERN Open Hardware Licence" width="100" />
+</a>
+
+**CERN Open Hardware Licence Version 2 – Strongly Reciprocal (CERN-OHL-S-2.0)**
+
+O hardware pode ser estudado, fabricado, modificado e redistribuído de acordo com os termos da CERN-OHL-S-2.0, respeitando suas condições de reciprocidade.
+
+[Leia o texto completo da CERN-OHL-S-2.0](https://ohwr.org/cern_ohl_s_v2.txt).
+
+---
+
+### 🌐 Filosofia: Open Source Hardware can Learn from Software
+
+> **Open Source Hardware can Learn from Software**
+
+Este projeto adota a filosofia de que o desenvolvimento de hardware aberto pode se beneficiar dos princípios, práticas e da cultura desenvolvidos no ecossistema de software livre e open source.
+
+<a href="https://www.open-electronics.org/what-can-open-source-hardware-learn-from-software/">
+  <img src="https://www.elektronart.com/wp-content/uploads/2021/04/OSS-OSHW-logo.jpg" alt="Open Source Hardware can Learn from Software" width="100" />
+</a>
+
+Assim como no software, o projeto busca incentivar:
+
+* **transparência** — disponibilização dos arquivos e informações necessárias para compreender o projeto;
+* **liberdade** — possibilidade de estudar, modificar e adaptar o projeto;
+* **colaboração** — incentivo à participação e ao desenvolvimento por terceiros;
+* **compartilhamento** — possibilidade de distribuir o projeto e suas modificações de acordo com a licença aplicável;
+* **reprodutibilidade** — disponibilização dos arquivos necessários para que outras pessoas possam reproduzir o hardware.
+
+**“Open Source Hardware can Learn from Software” não constitui uma licença jurídica adicional.** A licença legal aplicável ao hardware deste projeto é a **CERN-OHL-S-2.0**.
+
+---
+
+### ⚖️ Resumo
+
+| Material                                                      | Licença / Princípio                          |
+| ------------------------------------------------------------- | -------------------------------------------- |
+| 📄 Documentação, textos, imagens e outros conteúdos criativos | CC BY-NC-SA 4.0                              |
+| 💻 Código-fonte e software                                    | GNU GPLv3                                    |
+| 🔧 Hardware e arquivos de projeto                             | CERN-OHL-S-2.0                               |
+| 🌐 Filosofia do projeto                                       | Open Source Hardware can Learn from Software |
+
+> **Importante:** cada licença se aplica ao respectivo tipo de material. O conteúdo criativo, o software e o hardware possuem termos de licenciamento distintos. Consulte a licença correspondente antes de redistribuir ou modificar qualquer parte deste projeto.
+
+---
+
 ## 👥 Colaboradores e Créditos
 
-Agradecimento especial aos desenvolvedores que projetaram e integraram este sistema:
+Agradecimento especial aos desenvolvedores que projetaram e integraram este sistema (Usuários do CBTalk):
 
-*   🛠️ `~ CASSA VAGABUNDO`
+*   ⚡ `~ CASSA VAGABUNDO`
 *   🎛️ `_PERNA-5-PR_`
-*   ⚡ `!# _TECNICO_ / SC`
+*   🛠️ `!# _TECNICO_ / SC`
 
-
-[![CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![GPLv3](https://www.gnu.org/graphics/gplv3-or-later.png)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![CERN-OHL-S](https://img.shields.io/badge/Hardware-CERN--OHL--S-blue)](https://cern-ohl.web.cern.ch/)
-[![Open Source Hardware](https://img.shields.io/badge/Open%20Source-Hardware-blue)](https://www.oshwa.org/definition/)
