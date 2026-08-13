@@ -1,8 +1,22 @@
 # 🤖 Sistema de Automação PTT Plus (4bt + OLED) para ESP32-C3
 
-[![License: CC BY-NC-SA 4.0](https://creativecommons.org)](http://creativecommons.org)
-[![Software License: GPLv3](https://gnu.org)](https://gnu.org)
-[![Hardware License: CERN-OHL-S](https://ohwr.org)](https://ohwr.org)
+
+
+## Licenças
+
+### Conteúdo
+Este projeto utiliza a licença Creative Commons BY-NC-SA 4.0.
+
+### Software
+O código-fonte deste projeto está licenciado sob GPLv3.
+
+### Hardware
+O projeto de hardware está licenciado sob CERN-OHL-S.
+
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-red.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
+
 
 
 Controle de comunicação sem fio de alta precisão baseado em Bluetooth Low Energy (BLE) projetado para automatizar comandos de clique e posicionamento de tela (emulação de mouse HID) no aplicativo CBTalk. O sistema possui temporização inteligente de segurança, interface visual em display compacto de 0.42" e calibração de coordenadas interativa gravada na memória Flash do circuito.
@@ -70,3 +84,10 @@ Agradecimento especial aos desenvolvedores que projetaram e integraram este sist
 *   🛠️ `~ CASSA VAGABUNDO`
 *   🎛️ `_PERNA-5-PR_`
 *   ⚡ `!# _TECNICO_ / SC`
+
+
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+[![Software License: GPLv3](https://img.shields.io/badge/Software%20License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+[![Hardware License: CERN-OHL-S](https://img.shields.io/badge/Hardware%20License-CERN--OHL--S-red.svg)](https://ohwr.org/cern_ohl_s_v2.txt)
