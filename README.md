@@ -176,6 +176,6 @@ Assim como no software, o projeto busca incentivar:
 Agradecimento especial aos desenvolvedores que projetaram e integraram este sistema (Usuários do CBTalk):
 
 *   ⚡ `~ CASSA VAGABUNDO`
-*   ⌨ `_PERNA-5-PR_`
+*   ⌨  `_PERNA-5-PR_`
 *   🛠️ `!# _TECNICO_ / SC`
 
