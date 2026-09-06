@@ -2,7 +2,7 @@
 #include <HijelHID_BLEMouse.h>
 
 // Instância do Mouse BLE com nome e fabricante personalizados
-HijelBLEMouse mouse("PTT PLUS 2bt", "MOSAICO");
+HijelBLEMouse mouse("PTT_PLUS_2bt", "MOSAICO", 100);
 
 // Configuração dos Pinos dos Botões (GPIO 3 e GPIO 4 no ESP32-C3)
 const int BUTTON_PIN1 = 3;
@@ -47,7 +47,7 @@ bool lastPairedState = false;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Iniciando ESP32 PTT+ 2bt");
+  Serial.println("Iniciando PTT_PLUS 2bt");
 
   // Configura os botões com Pull-Up interno
   pinMode(BUTTON_PIN1, INPUT_PULLUP);

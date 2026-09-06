@@ -70,7 +70,7 @@ constexpr uint32_t LED_BLINK_FAST_INTERVAL = 100;   // Intervalo do pisca rápid
 constexpr bool PTT_TOGGLE_MODE = true;
 
 // Instâncias de periféricos e armazenamento
-HijelBLEMouse mouse("PTT PLUS 4bt oled", "MOSAICO");
+HijelBLEMouse mouse("PTT_PLUS_4bt_oled", "MOSAICO", 100);
 Preferences preferences;
 
 // Construtor do display OLED 0.42" (SSD1306 72x40) via U8g2 - MESMO usado no código que funciona
