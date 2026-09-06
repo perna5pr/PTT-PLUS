@@ -1,4 +1,4 @@
-# 🤖 PTT-PLUS (2bt e 4bt) 
+# 🤖 PTT-PLUS (1bt | 2bt | 4bt)
 ## Sistema de Automação com ESP32-C3 super mini para o APP CBTalk
 
 Controle de comunicação sem fio de alta precisão baseado em Bluetooth Low Energy (BLE) projetado para automatizar comandos de clique e posicionamento de tela (emulação de mouse HID) no aplicativo CBTalk. O sistema possui temporização inteligente de segurança, interface visual em display compacto de 0.42" e calibração de coordenadas interativa gravada na memória Flash do circuito.
