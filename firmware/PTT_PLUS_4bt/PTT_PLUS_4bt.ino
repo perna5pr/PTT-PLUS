@@ -18,7 +18,7 @@ struct ButtonState {
 };
 
 // Protótipos explícitos para evitar que o Arduino IDE gere protótipos antes da struct
-bool updateButton(ButtonState& btn);
+bool updateButton(ButtonState &btn);
 void updateOled(const char* line1, const char* line2 = nullptr, const char* line3 = nullptr, const char* line4 = nullptr);
 void loadCalibrationFromNVS();
 void saveCalibrationToNVS();
@@ -35,40 +35,31 @@ void handleButton4();
 // ============================================================================
 // CONFIGURAÇÕES E PINOS (ESP32-C3 SuperMini)
 // ============================================================================
-constexpr uint8_t BUTTON_PIN1 = 20;    // Botão 1: PTT (CBTalk) / Calibração: CIMA
-constexpr uint8_t BUTTON_PIN2 = 10;    // Botão 2: Detalhes / Calibração: BAIXO
-constexpr uint8_t BUTTON_PIN3 = 0;     // Botão 3: Lista / Calibração: DIREITA
-constexpr uint8_t BUTTON_PIN4 = 1;     // Botão 4: Mute / Calibração: ESQUERDA
-constexpr uint8_t BUTTON_BOOT = 9;     // Botão BOOT onboard do ESP32-C3 Super Mini (GPIO9)
-constexpr uint8_t PIN_LED_STATUS = 8;  // LED onboard do ESP32-C3 Super Mini (GPIO 8)
+constexpr uint8_t BUTTON_PIN1    = 20; // Botão 1: PTT (CBTalk) / Calibração: CIMA
+constexpr uint8_t BUTTON_PIN2    = 10; // Botão 2: Detalhes / Calibração: BAIXO
+constexpr uint8_t BUTTON_PIN3    = 0;  // Botão 3: Lista / Calibração: DIREITA
+constexpr uint8_t BUTTON_PIN4    = 1;  // Botão 4: Mute / Calibração: ESQUERDA
+constexpr uint8_t BUTTON_BOOT    = 9; // Botão BOOT onboard do ESP32-C3 Super Mini (GPIO9)
+constexpr uint8_t PIN_LED_STATUS = 8; // LED onboard do ESP32-C3 Super Mini (GPIO 8)
 
 // No ESP32-C3 Super Mini o LED onboard do GPIO8 é ATIVO EM NÍVEL BAIXO (LOW = aceso).
 // As funções abaixo abstraem isso para o resto do código continuar "pensando" em ON/OFF normal.
 constexpr bool LED_ACTIVE_LOW = true;
 
-inline void ledOn() {
-  digitalWrite(PIN_LED_STATUS, LED_ACTIVE_LOW ? LOW : HIGH);
-}
-inline void ledOff() {
-  digitalWrite(PIN_LED_STATUS, LED_ACTIVE_LOW ? HIGH : LOW);
-}
-inline void ledSet(bool on) {
-  on ? ledOn() : ledOff();
-}
-inline void ledToggle(bool& stateVar) {
-  stateVar = !stateVar;
-  ledSet(stateVar);
-}
+inline void ledOn()  { digitalWrite(PIN_LED_STATUS, LED_ACTIVE_LOW ? LOW  : HIGH); }
+inline void ledOff() { digitalWrite(PIN_LED_STATUS, LED_ACTIVE_LOW ? HIGH : LOW);  }
+inline void ledSet(bool on) { on ? ledOn() : ledOff(); }
+inline void ledToggle(bool &stateVar) { stateVar = !stateVar; ledSet(stateVar); }
 
-constexpr uint32_t DEBOUNCE_DELAY = 50;               // Tempo de debounce para os botões (ms)
-constexpr uint32_t PTT_MAX_TIMEOUT = 90000;           // Tempo máximo do PTT ativo em ms (90s)
-constexpr uint32_t BOOT_HOLD_TO_CALIBRATE_MS = 5000;  // Tempo segurando o BOOT para entrar na calibração
+constexpr uint32_t DEBOUNCE_DELAY  = 50;    // Tempo de debounce para os botões (ms)
+constexpr uint32_t PTT_MAX_TIMEOUT = 90000; // Tempo máximo do PTT ativo em ms (90s)
+constexpr uint32_t BOOT_HOLD_TO_CALIBRATE_MS = 5000; // Tempo segurando o BOOT para entrar na calibração
 
 // Constantes para os avisos regressivos do LED
-constexpr uint32_t PTT_WARN_30S_ELAPSED = 60000;   // Faltam 30s (60s decorridos)
-constexpr uint32_t PTT_WARN_15S_ELAPSED = 75000;   // Faltam 15s (75s decorridos)
-constexpr uint32_t LED_BLINK_SLOW_INTERVAL = 300;  // Intervalo do pisca lento (300ms)
-constexpr uint32_t LED_BLINK_FAST_INTERVAL = 100;  // Intervalo do pisca rápido (100ms)
+constexpr uint32_t PTT_WARN_30S_ELAPSED    = 60000; // Faltam 30s (60s decorridos)
+constexpr uint32_t PTT_WARN_15S_ELAPSED    = 75000; // Faltam 15s (75s decorridos)
+constexpr uint32_t LED_BLINK_SLOW_INTERVAL = 300;   // Intervalo do pisca lento (300ms)
+constexpr uint32_t LED_BLINK_FAST_INTERVAL = 100;   // Intervalo do pisca rápido (100ms)
 
 // Modo de funcionamento do PTT: true = TOGGLE, false = HOLD
 constexpr bool PTT_TOGGLE_MODE = true;
@@ -98,7 +89,7 @@ uint32_t lastLedBlinkTime = 0;
 bool ledState = false;
 int lastPrintedSecond = -1;
 
-bool bootHeld = false;  // controla a deteccao do "segurar BOOT por 5s"
+bool bootHeld = false;          // controla a deteccao do "segurar BOOT por 5s"
 uint32_t bootPressStart = 0;
 
 // Substitui a atualização do display OLED (que não existe nesta placa) por uma
@@ -108,18 +99,9 @@ uint32_t bootPressStart = 0;
 void updateOled(const char* line1, const char* line2, const char* line3, const char* line4) {
   Serial.print("[STATUS] ");
   if (line1) Serial.print(line1);
-  if (line2) {
-    Serial.print(" | ");
-    Serial.print(line2);
-  }
-  if (line3) {
-    Serial.print(" | ");
-    Serial.print(line3);
-  }
-  if (line4) {
-    Serial.print(" | ");
-    Serial.print(line4);
-  }
+  if (line2) { Serial.print(" | "); Serial.print(line2); }
+  if (line3) { Serial.print(" | "); Serial.print(line3); }
+  if (line4) { Serial.print(" | "); Serial.print(line4); }
   Serial.println();
 }
 
@@ -127,7 +109,7 @@ void updateOled(const char* line1, const char* line2, const char* line3, const c
 // PERSISTÊNCIA NA MEMÓRIA FLASH (NVS)
 // ============================================================================
 void loadCalibrationFromNVS() {
-  preferences.begin("ptt_calib", true);  // Modo Leitura
+  preferences.begin("ptt_calib", true); // Modo Leitura
   btnCoords[0].x = preferences.getShort("b1_x", -50);
   btnCoords[0].y = preferences.getShort("b1_y", 254);
   btnCoords[1].x = preferences.getShort("b2_x", -127);
@@ -145,7 +127,7 @@ void loadCalibrationFromNVS() {
 }
 
 void saveCalibrationToNVS() {
-  preferences.begin("ptt_calib", false);  // Modo Escrita
+  preferences.begin("ptt_calib", false); // Modo Escrita
   preferences.putShort("b1_x", btnCoords[0].x);
   preferences.putShort("b1_y", btnCoords[0].y);
   preferences.putShort("b2_x", btnCoords[1].x);
@@ -174,7 +156,7 @@ void moveMouseSegmented(int16_t totalX, int16_t totalY) {
     remX -= stepX;
     remY -= stepY;
 
-    delay(50);  // Delay obrigatório para estabilização entre comandos
+    delay(50); // Delay obrigatório para estabilização entre comandos
   }
 }
 
@@ -206,17 +188,19 @@ void runCalibrationMode() {
   delay(200);
 
   Serial.println("----------------------------------------------------------------------------------");
-  Serial.println("A calibração agora é feita 100% pelo Serial Monitor.");
-  Serial.println("Para cada botão, digite a posição absoluta desejada no formato 'X,Y' e Enter");
-  Serial.println("(ex: -50,254) — o cursor se move até lá a partir do canto. Repita quantas vezes");
-  Serial.println("precisar até acertar o lugar certo, depois digite 'ok' e Enter para confirmar");
-  Serial.println("(o botão BOOT físico também confirma, se preferir).");
+  Serial.println("A calibração pode ser feita pelos 4 botões físicos OU pelo Serial Monitor.");
+  Serial.println("Botões físicos: Btn1=CIMA, Btn2=BAIXO, Btn3=DIREITA, Btn4=ESQUERDA (ajuste fino).");
+  Serial.println("Serial: digite a posição absoluta 'X,Y' e Enter (ex: -50,254) para pular direto");
+  Serial.println("até lá a partir do canto. Os dois métodos podem ser combinados livremente.");
+  Serial.println("Quando estiver no lugar certo, aperte o BOOT ou digite 'ok' e Enter para confirmar.");
   Serial.println("O LED faz N piscadas no primeiro segundo (N = numero do botao) e fica");
   Serial.println("apagado no segundo seguinte, repetindo esse ciclo de 2 segundos.");
   Serial.println("----------------------------------------------------------------------------------\n");
 
-  updateOled("CALIBRACAO", "Use o Serial", "X,Y + Enter", "ok=Confirma");
+  updateOled("CALIBRACAO", "Botoes ou", "Serial: X,Y", "ok=Confirma");
   delay(1500);
+
+  constexpr int CALIB_STEP = 5; // Resolução do deslocamento por passo durante ajuste manual pelos botões
 
   for (int i = 0; i < 4; i++) {
     Serial.printf(">>> CONFIGURANDO BOTÃO %d <<< (LED pisca %d vez(es) por segundo)\n", i + 1, i + 1);
@@ -236,17 +220,37 @@ void runCalibrationMode() {
     // Velocidade do pisca-LED especifica deste botao: (i+1) piscadas dentro do
     // primeiro segundo de um ciclo de 2 segundos; o segundo seguinte fica apagado.
     const uint32_t blinksThisButton = (uint32_t)(i + 1);
-    const uint32_t halfPeriod = 500UL / blinksThisButton;  // duracao de cada aceso/apagado dentro do 1o segundo
+    const uint32_t halfPeriod = 500UL / blinksThisButton; // duracao de cada aceso/apagado dentro do 1o segundo
     bool lastLedComputed = false;
 
     Serial.printf(">>> Ajustando Botao %d <<<\n", i + 1);
-    Serial.println("Digite a posicao absoluta 'X,Y' (a partir do canto) e Enter, ex: -50,254");
-    Serial.println("O cursor se move ate essa posicao. Repita quantas vezes quiser para ajustar.");
-    Serial.println("Quando estiver no lugar certo, digite 'ok' e Enter para confirmar.");
+    Serial.println("Use os botoes fisicos (1=cima, 2=baixo, 3=direita, 4=esquerda) para ajuste fino,");
+    Serial.println("ou digite a posicao absoluta 'X,Y' pelo Serial (ex: -50,254) para pular direto.");
+    Serial.println("Quando estiver no lugar certo, aperte o BOOT ou digite 'ok' e Enter para confirmar.");
 
     bool stepConfirmed = false;
     while (!stepConfirmed) {
       bool confirmNow = (digitalRead(BUTTON_BOOT) == LOW);  // BOOT fisico continua valendo como atalho
+
+      // --- Entrada pelos botões físicos: ajuste fino incremental ---
+      bool b1 = (digitalRead(BUTTON_PIN1) == LOW);
+      bool b2 = (digitalRead(BUTTON_PIN2) == LOW);
+      bool b3 = (digitalRead(BUTTON_PIN3) == LOW);
+      bool b4 = (digitalRead(BUTTON_PIN4) == LOW);
+
+      int dx = 0;
+      int dy = 0;
+      if (b1) dy -= CALIB_STEP; // Botão 1: Cima
+      if (b2) dy += CALIB_STEP; // Botão 2: Baixo
+      if (b3) dx += CALIB_STEP; // Botão 3: Direita
+      if (b4) dx -= CALIB_STEP; // Botão 4: Esquerda
+
+      if (dx != 0 || dy != 0) {
+        mouse.moveTo(dx, dy);
+        currentX += dx;
+        currentY += dy;
+        delay(30);
+      }
 
       // --- Entrada via Serial: posicao absoluta ---
       if (Serial.available()) {
@@ -341,7 +345,7 @@ void runCalibrationMode() {
 // ============================================================================
 // FUNÇÕES AUXILIARES DE LEITURA E STATUS
 // ============================================================================
-bool updateButton(ButtonState& btn) {
+bool updateButton(ButtonState &btn) {
   bool reading = digitalRead(btn.pin);
 
   if (reading != btn.rawState) {
@@ -487,8 +491,11 @@ void setup() {
   pinMode(BUTTON_PIN4, INPUT_PULLUP);
   pinMode(BUTTON_BOOT, INPUT_PULLUP);
 
-  // Configura o pino 6 com resistor de Pull-down interno (Fica em LOW por padrão)
-  pinMode(6, INPUT_PULLDOWN);  // essa linha só deve ser ativa para esp32c3 supermini
+  // Configura o pino 6 com resistor de Pull-down interno (fica em LOW por padrão).
+  // Necessario porque o chicote de fios foi montado para a pinagem da ESP32-C3 OLED
+  // (5V/GND/3.3V de um lado da placa); na SuperMini esses pinos ficam do lado oposto,
+  // entao usamos o GPIO6 como uma referencia de GND para esse fio especifico.
+  pinMode(6, INPUT_PULLDOWN);
 
   pinMode(PIN_LED_STATUS, OUTPUT);
   ledOff();
@@ -542,7 +549,7 @@ void loop() {
         return;
       }
     } else {
-      bootHeld = false;  // soltou antes de completar os 5s, ou PTT esta ativo: cancela
+      bootHeld = false; // soltou antes de completar os 5s, ou PTT esta ativo: cancela
     }
 
     if (isPttActive) {
