@@ -1,11 +1,14 @@
 #include <Arduino.h>
 #include <HijelHID_BLEMouse.h>
+#include <Preferences.h>
 
 // Instância do Mouse BLE com nome e fabricante personalizados
 HijelBLEMouse mouse("PTT_PLUS_1bt", "MOSAICO", 100);
 
-#define PINO_PTT 9
+#define PINO_PTT 9  // Mesmo pino do botao BOOT onboard do ESP32-C3 SuperMini
 #define PINO_LED 8
+
+Preferences preferences;
 
 const bool LED_ACTIVE_LOW = true;  // no ESP32-C3 SuperMini o LED onboard do GPIO8 acende em LOW.
                                     // Se ficar invertido (aceso quando devia estar apagado), mude para false.
@@ -18,6 +21,16 @@ const unsigned long LED_WARN_SLOW_THRESHOLD_MS = 30000;   // a partir daqui (30s
 const unsigned long LED_WARN_FAST_THRESHOLD_MS = 10000;   // a partir daqui (10s restantes) pisca rapido
 const unsigned long LED_BLINK_SLOW_MS = 500;               // intervalo do pisca devagar
 const unsigned long LED_BLINK_FAST_MS = 150;                // intervalo do pisca rapido
+
+// --- Posição do clique do PTT na tela (calibrável, salva na memória flash) ---
+int16_t pttX = -70;
+int16_t pttY = 240;
+
+// --- Controle de entrada no modo calibração ---
+// Como este projeto so tem 1 botao (PINO_PTT = 9, o mesmo do BOOT onboard),
+// a calibracao e acionada segurando o PROPRIO botao de PTT por 5s continuos.
+const unsigned long BOOT_HOLD_TO_CALIBRATE_MS = 5000;
+bool calibrationArmed = false;  // vira true assim que o hold ultrapassa 5s nesta pressao
 
 // --- PTT ---
 bool isPressed = false;       // true enquanto o PTT esta ativo (transmitindo)
@@ -43,6 +56,139 @@ void setLed(bool on) {
   ledOn = on;
 }
 
+// Move o cursor em passos de no maximo 127 unidades (limite do protocolo HID),
+// dividindo automaticamente deslocamentos maiores.
+void moveMouseSegmented(int16_t totalX, int16_t totalY) {
+  int16_t remX = totalX;
+  int16_t remY = totalY;
+  while (remX != 0 || remY != 0) {
+    int8_t stepX = (int8_t)constrain(remX, -127, 127);
+    int8_t stepY = (int8_t)constrain(remY, -127, 127);
+    mouse.moveTo(stepX, stepY);
+    remX -= stepX;
+    remY -= stepY;
+    delay(50);
+  }
+}
+
+void loadCalibrationFromNVS() {
+  preferences.begin("ptt_calib", true);
+  pttX = preferences.getShort("ptt_x", -70);
+  pttY = preferences.getShort("ptt_y", 240);
+  preferences.end();
+  Serial.printf("Posicao do PTT carregada: X=%d Y=%d\n", pttX, pttY);
+}
+
+void saveCalibrationToNVS() {
+  preferences.begin("ptt_calib", false);
+  preferences.putShort("ptt_x", pttX);
+  preferences.putShort("ptt_y", pttY);
+  preferences.end();
+  Serial.println("Posicao do PTT salva na memoria flash (NVS)!");
+}
+
+// Modo de calibração: acionado ao segurar o próprio botão de PTT por 5s contínuos.
+// Configuração 100% pelo Serial Monitor (digite 'X,Y' + Enter para mover o cursor
+// até lá, e 'ok' ou o próprio botão para confirmar).
+void runCalibrationMode() {
+  Serial.println("\n=======================================================");
+  Serial.println(">>> MODO DE CALIBRAÇÃO ATIVADO (botao segurado por 5s)! <<<");
+  Serial.println("=======================================================\n");
+
+  Serial.println("Entrando no modo de calibracao... aguarde.");
+  setLed(true);
+  delay(3000);
+  setLed(false);
+
+  while (digitalRead(PINO_PTT) == LOW) {
+    delay(10);
+  }
+  delay(200);
+
+  Serial.println("----------------------------------------------------------------------------------");
+  Serial.println("Digite a posição absoluta 'X,Y' e Enter (ex: -70,240) para mover o cursor até lá,");
+  Serial.println("a partir do canto. Repita quantas vezes quiser até acertar. Depois digite 'ok'");
+  Serial.println("(ou aperte o botão) para confirmar e salvar.");
+  Serial.println("O LED pisca 1x no primeiro segundo de cada ciclo de 2s, e apaga no segundo seguinte.");
+  Serial.println("----------------------------------------------------------------------------------\n");
+
+  mouse.moveTo(2000, -2000);  // reseta o cursor no canto antes de calibrar
+  delay(300);
+
+  int16_t currentX = 0;
+  int16_t currentY = 0;
+  bool lastLedComputed = false;
+  bool stepConfirmed = false;
+
+  while (!stepConfirmed) {
+    bool confirmNow = (digitalRead(PINO_PTT) == LOW);
+
+    if (Serial.available()) {
+      String cmd = Serial.readStringUntil('\n');
+      cmd.trim();
+      if (cmd.length() > 0) {
+        String cmdLower = cmd;
+        cmdLower.toLowerCase();
+        if (cmdLower == "ok" || cmdLower == "enter") {
+          confirmNow = true;
+        } else {
+          int commaIndex = cmd.indexOf(',');
+          if (commaIndex > 0) {
+            int16_t targetX = (int16_t)cmd.substring(0, commaIndex).toInt();
+            int16_t targetY = (int16_t)cmd.substring(commaIndex + 1).toInt();
+            int16_t deltaX = targetX - currentX;
+            int16_t deltaY = targetY - currentY;
+            moveMouseSegmented(deltaX, deltaY);
+            currentX = targetX;
+            currentY = targetY;
+            Serial.printf("  Cursor movido para X=%d Y=%d (a partir do canto)\n", currentX, currentY);
+          } else {
+            Serial.println("  Comando nao reconhecido. Use 'X,Y' (ex: -70,240) ou 'ok'.");
+          }
+        }
+      }
+    }
+
+    // LED: 1 piscada no primeiro segundo de cada ciclo de 2s, apagado no segundo seguinte
+    unsigned long cyclePos = millis() % 2000;
+    bool shouldBeOn = (cyclePos < 500);
+    if (shouldBeOn != lastLedComputed) {
+      lastLedComputed = shouldBeOn;
+      setLed(shouldBeOn);
+    }
+
+    if (confirmNow) {
+      pttX = currentX;
+      pttY = currentY;
+      Serial.printf("-> Posição do PTT SALVA! X=%d Y=%d\n\n", pttX, pttY);
+
+      for (int flash = 0; flash < 3; flash++) {
+        setLed(true);
+        delay(80);
+        setLed(false);
+        delay(80);
+      }
+
+      stepConfirmed = true;
+      while (digitalRead(PINO_PTT) == LOW) {
+        delay(10);
+      }
+      delay(300);
+    }
+
+    delay(10);
+  }
+
+  saveCalibrationToNVS();
+
+  Serial.println("\n=======================================================");
+  Serial.println("Calibração concluída!");
+  Serial.println("=======================================================\n");
+
+  setLed(false);
+  mouse.moveTo(2000, -2000);
+}
+
 void setup() {
   Serial.begin(115200);
   Serial.println("Iniciando ESP32 PTT_PLUS 1bt");
@@ -50,6 +196,8 @@ void setup() {
   pinMode(PINO_PTT, INPUT_PULLUP);
   pinMode(PINO_LED, OUTPUT);
   setLed(false);
+
+  loadCalibrationFromNVS();
 
   mouse.begin();
 
@@ -102,13 +250,8 @@ void atualizarLed() {
 // Liga o PTT: posiciona o cursor e pressiona o clique esquerdo
 void ativarPTT() {
   isPressed = true;
-  // mouse.moveTo(X, Y) X=direita, -X=esquerda, Y=baixo, -Y=cima
-  mouse.moveTo(-70, 120);
-  delay(50);
-  mouse.moveTo(0, 120);
-  delay(50);
+  moveMouseSegmented(pttX, pttY);
   mouse.press(MouseButton::Left);  // press()/release() nao bloqueiam
-  delay(50);
   Serial.println("PTT ativado");
 }
 
@@ -164,6 +307,7 @@ void loop() {
 
       if (stableState == LOW) {
         // --- Borda de descida: botao foi pressionado agora ---
+        calibrationArmed = false;  // nova pressao: ainda nao passou dos 5s
         if (isLocked) {
           // Segundo clique enquanto travado -> destrava e solta
           isLocked = false;
@@ -192,6 +336,22 @@ void loop() {
       }
     }
     lastButtonState = reading;
+
+    // Deteccao do hold de 5s para calibracao: so verifica enquanto o botao
+    // ainda esta fisicamente pressionado, num toque que comecou como "hold"
+    // normal de PTT (nao travado). Ao ultrapassar 5s, cancela o PTT em
+    // andamento e entra na calibracao.
+    if (isPressed && !isLocked && !calibrationArmed &&
+        (millis() - pressStartTime) >= BOOT_HOLD_TO_CALIBRATE_MS) {
+      calibrationArmed = true;
+      Serial.println("Hold de 5s detectado no botao de PTT - entrando em calibracao");
+      liberarPTT();  // desfaz o clique que estava em andamento
+      runCalibrationMode();
+      // Reseta o debounce para nao reprocessar o release pendente deste toque
+      stableState = HIGH;
+      lastButtonState = HIGH;
+      return;
+    }
 
     // Trava de seguranca: solta o PTT automaticamente apos PTT_MAX_HOLD_MS,
     // seja no modo travado (clique) ou segurando (hold)
